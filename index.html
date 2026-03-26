@@ -22,26 +22,32 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Nunito', sans-serif; color: var(--texto); background: var(--blanco); overflow-x: hidden; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--texto);
+      background: var(--blanco);
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
 
     /* ── NAVBAR ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: var(--azul);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px; height: 64px;
+      padding: 0 24px; height: 64px;
     }
     nav img.logo { height: 54px; }
-    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul { list-style: none; display: flex; gap: 24px; }
     nav ul li a {
       color: rgba(255,255,255,0.75);
       text-decoration: none;
       font-family: 'Raleway', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px; font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       transition: color 0.2s;
+      white-space: nowrap;
     }
     nav ul li a:hover { color: var(--salmon); }
 
@@ -51,240 +57,187 @@
       background: var(--azul);
       min-height: 90px;
       display: flex; align-items: center;
-      padding: 32px 40px 28px;
-      position: relative;
-      overflow: hidden;
+      padding: 32px 24px 28px;
+      position: relative; overflow: hidden;
     }
     .hero::after {
       content: '';
       position: absolute; right: -60px; top: -60px;
-      width: 320px; height: 320px;
-      border-radius: 50%;
+      width: 320px; height: 320px; border-radius: 50%;
       border: 1px solid rgba(212,132,90,0.15);
     }
     .hero::before {
       content: '';
       position: absolute; right: 40px; top: 20px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
+      width: 180px; height: 180px; border-radius: 50%;
       border: 1px solid rgba(212,132,90,0.1);
     }
     .hero-content { position: relative; z-index: 1; }
     .hero-tag {
       display: inline-block;
-      background: var(--salmon);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 10px;
+      background: var(--salmon); color: #fff;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 10px;
     }
     .hero h1 {
       font-family: 'Raleway', sans-serif;
-      font-size: 42px;
-      font-weight: 900;
-      color: #fff;
-      line-height: 1;
-      letter-spacing: -0.01em;
+      font-size: 42px; font-weight: 900;
+      color: #fff; line-height: 1; letter-spacing: -0.01em;
     }
     .hero h1 span { color: var(--salmon); }
     .hero-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-top: 6px;
-      font-weight: 300;
+      font-size: 13px; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-top: 6px; font-weight: 300;
     }
 
-    /* ── SECCIÓN MODELO 3D ── */
-    .seccion-modelo {
-      background: var(--azul-mid);
-      position: relative;
-      overflow: hidden;
-    }
+    /* ── MODELO 3D ── */
+    .seccion-modelo { background: var(--azul-mid); position: relative; overflow: hidden; }
     .seccion-titulo {
-      padding: 40px 40px 0;
+      padding: 32px 24px 0;
       display: flex; align-items: center; gap: 14px;
+      flex-wrap: wrap;
     }
     .seccion-titulo h2 {
       font-family: 'Raleway', sans-serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: #fff;
+      font-size: 22px; font-weight: 700; color: #fff;
+      white-space: nowrap;
     }
     .seccion-titulo h2 span { color: var(--salmon); }
     .seccion-titulo .linea {
-      flex: 1; height: 1px;
+      flex: 1; min-width: 40px; height: 1px;
       background: linear-gradient(to right, rgba(212,132,90,0.4), transparent);
+    }
+    .seccion-titulo .hint-texto {
+      font-size: 12px; color: rgba(255,255,255,0.4);
+      font-family: 'Nunito', sans-serif;
+      white-space: nowrap;
     }
 
     model-viewer {
-      width: 100%;
-      height: 520px;
+      width: 100%; height: 520px;
       --poster-color: transparent;
       background: transparent;
     }
 
     .logo-watermark {
-      position: absolute;
-      bottom: 20px; right: 24px;
-      opacity: 0.6;
-      height: 50px;
-      pointer-events: none;
+      position: absolute; bottom: 20px; right: 16px;
+      opacity: 0.6; height: 50px; pointer-events: none;
     }
-
     .ar-btn {
-      position: absolute;
-      bottom: 24px; left: 50%;
+      position: absolute; bottom: 24px; left: 50%;
       transform: translateX(-50%);
-      background: var(--salmon);
-      color: #fff;
-      border: none;
-      border-radius: 30px;
-      padding: 12px 28px;
-      font-size: 14px;
-      font-weight: 700;
-      font-family: 'Raleway', sans-serif;
-      cursor: pointer;
+      background: var(--salmon); color: #fff;
+      border: none; border-radius: 30px;
+      padding: 12px 28px; font-size: 14px; font-weight: 700;
+      font-family: 'Raleway', sans-serif; cursor: pointer;
       display: flex; align-items: center; gap: 8px;
       box-shadow: 0 4px 20px rgba(212,132,90,0.4);
       transition: background 0.2s, transform 0.15s;
-      z-index: 10;
-      letter-spacing: 0.03em;
+      z-index: 10; letter-spacing: 0.03em;
+      white-space: nowrap;
     }
     .ar-btn:hover { background: var(--salmon-lt); transform: translateX(-50%) translateY(-2px); }
     .modelo-wrap { position: relative; }
-
     #progress-bar {
-      width: 0%; height: 3px;
-      background: var(--salmon);
+      width: 0%; height: 3px; background: var(--salmon);
       position: absolute; top: 0; left: 0;
       transition: width 0.2s; z-index: 20;
     }
     .hide { display: none !important; }
 
     /* ── CARACTERÍSTICAS ── */
-    .seccion-carac {
-      background: var(--gris);
-      padding: 60px 40px;
-    }
+    .seccion-carac { background: var(--gris); padding: 48px 24px; }
     .carac-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(160px, 1fr));
-      gap: 20px;
-      margin-top: 32px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+      justify-items: center;
     }
     .carac-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 24px 20px;
-      text-align: center;
+      background: #fff; border-radius: 14px;
+      padding: 20px 16px; text-align: center;
       box-shadow: 0 2px 12px rgba(27,42,74,0.07);
       transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
     }
-    .carac-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(27,42,74,0.12);
-    }
-    .carac-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-      display: block;
-    }
+    .carac-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(27,42,74,0.12); }
+    .carac-icon { font-size: 26px; margin-bottom: 8px; display: block; }
     .carac-label {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--salmon);
-      margin-bottom: 6px;
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--salmon); margin-bottom: 5px;
     }
     .carac-valor {
       font-family: 'Raleway', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--azul);
-      line-height: 1.3;
+      font-size: 15px; font-weight: 700;
+      color: var(--azul); line-height: 1.3;
     }
-
-    /* Badge estado */
     .badge-estado {
       display: inline-flex; align-items: center; gap: 6px;
       background: rgba(212,132,90,0.12);
       border: 1px solid rgba(212,132,90,0.3);
-      color: var(--salmon);
-      font-size: 12px; font-weight: 700;
-      padding: 4px 14px; border-radius: 20px;
-      margin-bottom: 16px;
+      color: var(--salmon); font-size: 12px; font-weight: 700;
+      padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
     }
     .badge-estado::before {
       content: ''; width: 7px; height: 7px;
       background: var(--salmon); border-radius: 50%;
     }
-
-    /* Precio highlight */
     .precio-wrap {
-      background: var(--azul);
-      border-radius: 14px;
-      padding: 24px 28px;
+      background: var(--azul); border-radius: 14px;
+      padding: 20px 24px;
       display: flex; align-items: center; justify-content: space-between;
-      margin-top: 32px; flex-wrap: wrap; gap: 16px;
+      margin-top: 28px; flex-wrap: wrap; gap: 16px;
     }
     .precio-wrap .desde { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 300; }
     .precio-wrap .precio {
       font-family: 'Raleway', sans-serif;
-      font-size: 36px; font-weight: 900; color: #fff;
+      font-size: 32px; font-weight: 900; color: #fff;
     }
     .precio-wrap .precio span { color: var(--salmon); }
     .precio-cta {
-      background: var(--salmon);
-      color: #fff; border: none;
-      border-radius: 30px;
-      padding: 12px 28px;
+      background: var(--salmon); color: #fff; border: none;
+      border-radius: 30px; padding: 12px 28px;
       font-family: 'Raleway', sans-serif;
       font-size: 14px; font-weight: 700;
       cursor: pointer; letter-spacing: 0.03em;
-      transition: background 0.2s;
+      transition: background 0.2s; white-space: nowrap;
     }
     .precio-cta:hover { background: var(--salmon-lt); }
 
     /* ── TOUR 360 ── */
     .seccion-tour { background: var(--azul); padding-bottom: 0; }
-
-    #viewer-360 { width: 100%; height: 620px; }
-
+    #viewer-360 { width: 100%; height: 60vw; min-height: 320px; max-height: 620px; }
     .tour-nav {
       background: rgba(0,0,0,0.4);
-      padding: 12px 20px 16px;
-      display: flex; gap: 7px; flex-wrap: wrap; justify-content: center;
+      padding: 10px 16px 14px;
+      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
     }
     .tour-nav button {
-      padding: 5px 13px;
+      padding: 5px 12px;
       border: 1px solid rgba(255,255,255,0.2);
       border-radius: 20px;
       background: rgba(255,255,255,0.08);
       color: rgba(255,255,255,0.75);
-      cursor: pointer; font-size: 12px;
+      cursor: pointer; font-size: 11px;
       font-family: 'Nunito', sans-serif;
-      transition: all 0.2s;
+      transition: all 0.2s; white-space: nowrap;
     }
     .tour-nav button:hover { background: rgba(255,255,255,0.18); color: #fff; }
     .tour-nav button.active { background: var(--salmon); color: #fff; border-color: transparent; font-weight: 700; }
-
     .tour-label-bar {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 24px 0;
+      padding: 12px 20px 0; flex-wrap: wrap; gap: 6px;
     }
     #tour-scene-label {
       font-family: 'Raleway', sans-serif;
-      font-size: 15px; font-weight: 600;
+      font-size: 14px; font-weight: 600;
       color: #fff; letter-spacing: 0.04em;
     }
-    .tour-hint { font-size: 12px; color: rgba(255,255,255,0.4); }
+    .tour-hint { font-size: 11px; color: rgba(255,255,255,0.4); }
 
     #blackout {
       position: fixed; inset: 0;
@@ -295,11 +248,15 @@
     #blackout.fade-in  { opacity: 1; pointer-events: all; }
     #blackout.fade-out { opacity: 0; pointer-events: none; }
 
-    /* hotspots */
+    /* ── HOTSPOTS ── */
     .pnlm-hotspot-base.hs-nav {
       width: 36px !important; height: 36px !important;
       background: none !important; border: none !important;
-      margin: -18px 0 0 -18px !important; overflow: visible !important;
+      /* Centrado correcto en todos los dispositivos */
+      margin-top: -18px !important;
+      margin-left: -18px !important;
+      overflow: visible !important;
+      transform: none !important;
     }
     .pnlm-hotspot-base.hs-nav span.pnlm-sprite { display: none !important; }
     .pnlm-hotspot-base.hs-nav::before,
@@ -334,68 +291,103 @@
     .pnlm-controls-container { display: none !important; }
 
     /* ── COTIZACIÓN ── */
-    .seccion-cotiza {
-      background: var(--gris);
-      padding: 60px 40px;
-    }
-    .cotiza-wrap {
-      max-width: 560px;
-      margin: 0 auto;
-    }
-    .form-grid { display: grid; gap: 16px; margin-top: 28px; }
+    .seccion-cotiza { background: var(--gris); padding: 48px 24px; }
+    .cotiza-wrap { max-width: 560px; margin: 0 auto; }
+    .form-grid { display: grid; gap: 14px; margin-top: 24px; }
     .form-field { display: flex; flex-direction: column; gap: 6px; }
     .form-field label {
-      font-size: 12px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.08em;
-      color: var(--azul);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--azul);
     }
     .form-field input, .form-field select {
-      padding: 12px 16px;
-      border: 1.5px solid #dde3ed;
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: 'Nunito', sans-serif;
-      color: var(--texto);
-      background: #fff;
-      outline: none;
-      transition: border-color 0.2s;
+      padding: 12px 16px; border: 1.5px solid #dde3ed;
+      border-radius: 10px; font-size: 14px;
+      font-family: 'Nunito', sans-serif; color: var(--texto);
+      background: #fff; outline: none; transition: border-color 0.2s;
+      width: 100%;
     }
-    .form-field input:focus, .form-field select:focus {
-      border-color: var(--salmon);
-    }
+    .form-field input:focus, .form-field select:focus { border-color: var(--salmon); }
     .form-check {
       display: flex; align-items: center; gap: 10px;
       font-size: 13px; color: #666; cursor: pointer;
     }
-    .form-check input { width: 16px; height: 16px; accent-color: var(--salmon); }
+    .form-check input { width: 16px; height: 16px; accent-color: var(--salmon); flex-shrink: 0; }
     .form-check a { color: var(--salmon); }
     .btn-cotiza {
-      background: var(--salmon);
-      color: #fff; border: none;
-      border-radius: 30px;
-      padding: 14px 36px;
+      background: var(--salmon); color: #fff; border: none;
+      border-radius: 30px; padding: 14px 36px;
       font-family: 'Raleway', sans-serif;
       font-size: 15px; font-weight: 700;
-      cursor: pointer; width: 100%;
-      letter-spacing: 0.04em;
-      transition: background 0.2s, transform 0.15s;
-      margin-top: 8px;
+      cursor: pointer; width: 100%; letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s; margin-top: 8px;
     }
     .btn-cotiza:hover { background: var(--salmon-lt); transform: translateY(-2px); }
 
     /* ── FOOTER ── */
     footer {
-      background: var(--azul);
-      padding: 28px 40px;
+      background: var(--azul); padding: 24px;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 12px;
     }
     footer img { height: 26px; opacity: 0.7; }
-    footer p { font-size: 12px; color: rgba(255,255,255,0.35); }
+    footer p { font-size: 11px; color: rgba(255,255,255,0.35); }
 
     /* scroll reveal */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: none; }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+
+    /* Tablet: 2 columnas */
+    @media (max-width: 900px) {
+      .carac-grid { grid-template-columns: repeat(2, 1fr); }
+      nav ul { gap: 16px; }
+      nav ul li a { font-size: 11px; letter-spacing: 0.05em; }
+    }
+
+    /* Móvil grande: navbar simplificada */
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; height: 56px; }
+      nav img.logo { height: 38px; }
+      nav ul { gap: 12px; }
+      nav ul li a { font-size: 10px; letter-spacing: 0.03em; }
+
+      .hero { margin-top: 56px; padding: 24px 16px 20px; }
+      .hero h1 { font-size: 32px; }
+      .hero-sub { font-size: 11px; }
+
+      .seccion-titulo { padding: 24px 16px 0; gap: 10px; }
+      .seccion-titulo .hint-texto { display: none; }
+
+      model-viewer { height: 360px; }
+      .logo-watermark { height: 36px; bottom: 14px; right: 12px; }
+      .ar-btn { font-size: 13px; padding: 10px 22px; }
+
+      .seccion-carac { padding: 36px 16px; }
+      .carac-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .carac-card { padding: 16px 12px; }
+      .carac-valor { font-size: 13px; }
+
+      .precio-wrap { padding: 16px 18px; }
+      .precio-wrap .precio { font-size: 26px; }
+      .precio-cta { width: 100%; text-align: center; }
+
+      #viewer-360 { height: 72vw; min-height: 280px; }
+      .tour-nav button { font-size: 10px; padding: 4px 10px; }
+
+      .seccion-cotiza { padding: 36px 16px; }
+      footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
+    }
+
+    /* Móvil pequeño: nav con scroll o 1 columna */
+    @media (max-width: 420px) {
+      nav ul { overflow-x: auto; gap: 10px; padding-right: 4px; }
+      nav ul li a { font-size: 9.5px; }
+      .carac-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 28px; }
+    }
   </style>
 </head>
 <body>
@@ -425,7 +417,7 @@
   <div class="seccion-titulo reveal">
     <h2>Modelo <span>3D</span></h2>
     <div class="linea"></div>
-    <span style="font-size:12px;color:rgba(255,255,255,0.4);font-family:'Nunito',sans-serif;">Arrastra para explorar · Disponible en AR</span>
+    <span class="hint-texto">Arrastra para explorar · Disponible en AR</span>
   </div>
   <div class="modelo-wrap">
     <div id="progress-bar"></div>
@@ -453,56 +445,22 @@
   <div class="reveal">
     <span class="badge-estado">En construcción</span>
     <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
-      <h2 style="font-family:'Raleway',sans-serif;font-size:28px;font-weight:900;color:var(--azul);">
+      <h2 style="font-family:'Raleway',sans-serif;font-size:26px;font-weight:900;color:var(--azul);">
         Departamento <span style="color:var(--salmon);">Flat</span>
       </h2>
-      <span style="font-size:14px;color:#888;">Mérida Surco 224</span>
+      <span style="font-size:13px;color:#888;">Mérida Surco 224</span>
     </div>
   </div>
-
   <div class="carac-grid reveal">
-    <div class="carac-card">
-      <span class="carac-icon">📍</span>
-      <div class="carac-label">Ubicación</div>
-      <div class="carac-valor">Jr. Mérida 224<br/>Santiago de Surco</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">📐</span>
-      <div class="carac-label">Área total</div>
-      <div class="carac-valor">128.58 m²</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">🛏</span>
-      <div class="carac-label">Dormitorios</div>
-      <div class="carac-valor">3 dormitorios</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">🚿</span>
-      <div class="carac-label">Baños</div>
-      <div class="carac-valor">3 baños</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">🌿</span>
-      <div class="carac-label">Área libre</div>
-      <div class="carac-valor">24.04 m²</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">🏗</span>
-      <div class="carac-label">Entrega</div>
-      <div class="carac-valor">Etapa de<br/>pre-venta</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">🏦</span>
-      <div class="carac-label">Financiación</div>
-      <div class="carac-valor">Bancaria</div>
-    </div>
-    <div class="carac-card">
-      <span class="carac-icon">🌳</span>
-      <div class="carac-label">Vista</div>
-      <div class="carac-valor">Vista al parque</div>
-    </div>
+    <div class="carac-card"><span class="carac-icon">📍</span><div class="carac-label">Ubicación</div><div class="carac-valor">Jr. Mérida 224<br/>Santiago de Surco</div></div>
+    <div class="carac-card"><span class="carac-icon">📐</span><div class="carac-label">Área total</div><div class="carac-valor">128.58 m²</div></div>
+    <div class="carac-card"><span class="carac-icon">🛏</span><div class="carac-label">Dormitorios</div><div class="carac-valor">3 dormitorios</div></div>
+    <div class="carac-card"><span class="carac-icon">🚿</span><div class="carac-label">Baños</div><div class="carac-valor">3 baños</div></div>
+    <div class="carac-card"><span class="carac-icon">🌿</span><div class="carac-label">Área libre</div><div class="carac-valor">24.04 m²</div></div>
+    <div class="carac-card"><span class="carac-icon">🏗</span><div class="carac-label">Entrega</div><div class="carac-valor">Etapa de pre-venta</div></div>
+    <div class="carac-card"><span class="carac-icon">🏦</span><div class="carac-label">Financiación</div><div class="carac-valor">Bancaria</div></div>
+    <div class="carac-card"><span class="carac-icon">🌳</span><div class="carac-label">Vista</div><div class="carac-valor">Vista al parque</div></div>
   </div>
-
   <div class="precio-wrap reveal">
     <div>
       <div class="desde">Precio desde</div>
@@ -516,13 +474,14 @@
 
 <!-- TOUR 360 -->
 <section class="seccion-tour" id="tour">
-  <div class="seccion-titulo reveal" style="padding-bottom:14px;">
+  <div class="seccion-titulo reveal" style="padding-bottom:12px;">
     <h2>Tour <span>360°</span></h2>
     <div class="linea"></div>
-    <span class="tour-hint">Arrastra para explorar · Clic en los puntos para navegar</span>
+    <span class="tour-hint hint-texto">Arrastra para explorar · Clic en los puntos para navegar</span>
   </div>
   <div class="tour-label-bar">
     <span id="tour-scene-label">Sala central</span>
+    <span class="tour-hint">Toca los puntos para navegar</span>
   </div>
   <div id="viewer-360"></div>
   <div class="tour-nav">
@@ -543,7 +502,7 @@
 <section class="seccion-cotiza" id="cotiza">
   <div class="cotiza-wrap">
     <div class="reveal">
-      <h2 style="font-family:'Raleway',sans-serif;font-size:28px;font-weight:900;color:var(--azul);">
+      <h2 style="font-family:'Raleway',sans-serif;font-size:26px;font-weight:900;color:var(--azul);">
         Cotiza tu <span style="color:var(--salmon);">nuevo depa</span>
       </h2>
       <p style="font-size:14px;color:#666;margin-top:6px;">Un asesor se pondrá en contacto contigo a la brevedad.</p>
@@ -589,7 +548,7 @@
 <script src="https://unpkg.com/pannellum@2.5.6/build/pannellum.js"></script>
 <script>
 
-// ── MODELO 3D progress bar ──
+// ── MODELO 3D ──
 const progressBar = document.querySelector('#progress-bar');
 document.querySelector('model-viewer').addEventListener('progress', e => {
   const p = e.detail.totalProgress * 100;
@@ -661,8 +620,11 @@ function buildScenes() {
 }
 
 const viewer = pannellum.viewer('viewer-360', {
-  default: { firstScene: 'cam1', autoLoad: true, showControls: false,
-             sceneFadeDuration: 0, mouseZoom: true, hfov: 100, minHfov: 70, maxHfov: 115 },
+  default: {
+    firstScene: 'cam1', autoLoad: true, showControls: false,
+    sceneFadeDuration: 0, mouseZoom: true, hfov: 100,
+    minHfov: 70, maxHfov: 115
+  },
   scenes: buildScenes()
 });
 
@@ -708,14 +670,13 @@ function transicion(sceneId) {
 }
 
 function goTo(id) { if (!transitioning) transicion(id); }
-
 viewer.on('scenechange', id => { if (escenas[id]) actualizarNav(id); });
 viewer.on('load', () => { setTimeout(inyectarDots, 300); precargarVecinas('cam1'); });
 
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 </script>
