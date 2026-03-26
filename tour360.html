@@ -235,5 +235,11 @@ viewer.on('scenechange', id => { if (escenas[id]) actualizarNav(id); });
 viewer.on('load', () => { setTimeout(inyectarDots, 300); precargarVecinas('cam1'); });
 
 </script>
+
+<div id="debug-size" style="position:fixed;top:0;right:0;background:red;color:#fff;font-size:20px;z-index:9999;padding:4px 8px;"></div>
+<script>
+document.getElementById('debug-size').textContent = window.innerWidth + 'px';
+</script>
+
 </body>
 </html>
