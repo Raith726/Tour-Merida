@@ -45,22 +45,10 @@
       min-height: 90px; display: flex; align-items: center;
       padding: 32px 24px 28px; position: relative; overflow: hidden;
     }
-    .hero::after {
-      content: ''; position: absolute; right: -60px; top: -60px;
-      width: 320px; height: 320px; border-radius: 50%;
-      border: 1px solid rgba(212,132,90,0.15);
-    }
-    .hero::before {
-      content: ''; position: absolute; right: 40px; top: 20px;
-      width: 180px; height: 180px; border-radius: 50%;
-      border: 1px solid rgba(212,132,90,0.1);
-    }
+    .hero::after { content: ''; position: absolute; right: -60px; top: -60px; width: 320px; height: 320px; border-radius: 50%; border: 1px solid rgba(212,132,90,0.15); }
+    .hero::before { content: ''; position: absolute; right: 40px; top: 20px; width: 180px; height: 180px; border-radius: 50%; border: 1px solid rgba(212,132,90,0.1); }
     .hero-content { position: relative; z-index: 1; }
-    .hero-tag {
-      display: inline-block; background: var(--salmon); color: #fff;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px;
-    }
+    .hero-tag { display: inline-block; background: var(--salmon); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; }
     .hero h1 { font-family: 'Raleway', sans-serif; font-size: 42px; font-weight: 900; color: #fff; line-height: 1; }
     .hero h1 span { color: var(--salmon); }
     .hero-sub { font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 300; }
@@ -73,14 +61,9 @@
     .seccion-titulo .linea { flex: 1; min-width: 40px; height: 1px; background: linear-gradient(to right, rgba(212,132,90,0.4), transparent); }
     .hint-texto { font-size: 12px; color: rgba(255,255,255,0.4); font-family: 'Nunito', sans-serif; white-space: nowrap; }
 
-    model-viewer {
-      width: 100%; height: 520px;
-      --poster-color: transparent;
-      background: transparent;
-    }
+    model-viewer { width: 100%; height: 520px; --poster-color: transparent; background: transparent; }
     model-viewer::part(default-ar-button) {
-      background-color: var(--salmon) !important;
-      border-radius: 50% !important;
+      background-color: var(--salmon) !important; border-radius: 50% !important;
       width: 52px !important; height: 52px !important;
       bottom: 20px !important; right: 20px !important;
       box-shadow: 0 4px 16px rgba(212,132,90,0.5) !important;
@@ -109,18 +92,8 @@
 
     /* ── TOUR 360 — iframe ── */
     .seccion-tour { background: var(--azul); padding-bottom: 0; }
-    .tour-iframe-wrap {
-      width: 100%;
-      height: 65vw;
-      min-height: 340px;
-      max-height: 640px;
-    }
-    .tour-iframe-wrap iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
+    .tour-iframe-wrap { width: 100%; height: 65vw; min-height: 340px; max-height: 640px; }
+    .tour-iframe-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
 
     /* ── COTIZACIÓN ── */
     .seccion-cotiza { background: var(--gris); padding: 48px 24px; }
@@ -200,6 +173,7 @@
   </div>
 </section>
 
+<!-- MODELO 3D -->
 <section class="seccion-modelo" id="modelo">
   <div class="seccion-titulo reveal">
     <h2>Modelo <span>3D</span></h2>
@@ -224,6 +198,7 @@
   </div>
 </section>
 
+<!-- CARACTERÍSTICAS -->
 <section class="seccion-carac" id="caracteristicas">
   <div class="reveal">
     <span class="badge-estado">En construcción</span>
@@ -255,7 +230,7 @@
   </div>
 </section>
 
-<!-- TOUR 360 — iframe al tour standalone -->
+<!-- TOUR 360 — corre en su propio archivo tour360.html via iframe -->
 <section class="seccion-tour" id="tour">
   <div class="seccion-titulo reveal" style="padding-bottom:12px;">
     <h2>Tour <span>360°</span></h2>
@@ -267,6 +242,7 @@
   </div>
 </section>
 
+<!-- COTIZACIÓN -->
 <section class="seccion-cotiza" id="cotiza">
   <div class="cotiza-wrap">
     <div class="reveal">
@@ -311,7 +287,6 @@
 </footer>
 
 <script>
-// ── MODELO 3D progress bar ──
 const progressBar = document.querySelector('#progress-bar');
 document.querySelector('model-viewer').addEventListener('progress', e => {
   const p = e.detail.totalProgress * 100;
@@ -319,7 +294,6 @@ document.querySelector('model-viewer').addEventListener('progress', e => {
   if (p === 100) progressBar.classList.add('hide');
 });
 
-// ── SCROLL REVEAL ──
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
