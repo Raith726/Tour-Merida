@@ -91,6 +91,18 @@
     .seccion-tour { background: var(--azul); padding-bottom: 0; }
     .tour-iframe-wrap { width: 100%; height: 65vw; min-height: 340px; max-height: 640px; }
     .tour-iframe-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+    .tour-nav {
+      background: rgba(0,0,0,0.6); padding: 10px 16px 14px;
+      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+    }
+    .tour-nav button {
+      padding: 5px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
+      background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.75);
+      cursor: pointer; font-size: 11px; font-family: 'Nunito', sans-serif;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .tour-nav button:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    .tour-nav button.active { background: var(--salmon); color: #fff; border-color: transparent; font-weight: 700; }
 
     /* COTIZACIÓN */
     .seccion-cotiza { background: var(--gris); padding: 48px 24px; }
@@ -237,6 +249,18 @@
   <div class="tour-iframe-wrap">
     <iframe src="./tour360.html" allowfullscreen></iframe>
   </div>
+  <div class="tour-nav">
+    <button class="active" onclick="tourGoTo('cam1')">Sala central</button>
+    <button onclick="tourGoTo('cam2')">Baño de sala</button>
+    <button onclick="tourGoTo('cam3')">Cocina</button>
+    <button onclick="tourGoTo('cam4')">Pasillo</button>
+    <button onclick="tourGoTo('cam5')">Sala - Pasillo</button>
+    <button onclick="tourGoTo('cam6')">Baño secundario</button>
+    <button onclick="tourGoTo('cam7')">Baño principal</button>
+    <button onclick="tourGoTo('cam8')">Dormitorio principal</button>
+    <button onclick="tourGoTo('cam9')">Dormitorio mediano</button>
+    <button onclick="tourGoTo('cam10')">Dormitorio pequeño</button>
+  </div>
 </section>
 
 <!-- COTIZACIÓN -->
@@ -290,6 +314,15 @@ document.querySelector('model-viewer').addEventListener('progress', e => {
   progressBar.style.width = `${p}%`;
   if (p === 100) progressBar.classList.add('hide');
 });
+
+// Controlar el tour dentro del iframe via postMessage
+function tourGoTo(sceneId) {
+  const iframe = document.querySelector('.tour-iframe-wrap iframe');
+  if (iframe) iframe.contentWindow.postMessage({ action: 'goTo', scene: sceneId }, '*');
+  document.querySelectorAll('.tour-nav button').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick').includes(sceneId));
+  });
+}
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
