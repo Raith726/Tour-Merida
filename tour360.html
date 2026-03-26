@@ -8,84 +8,36 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', sans-serif; background: #0e0e0e; color: #fff; overflow: hidden; }
-
-    header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 52px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px; pointer-events: none;
-    }
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 52px; background: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; pointer-events: none; }
     #scene-label { font-size: 15px; font-weight: 500; letter-spacing: 0.04em; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,0.6); }
     .logo-txt { font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; text-transform: uppercase; }
-
     #viewer { width: 100vw; height: 100vh; }
-
-    #blackout {
-      position: fixed; inset: 0; background: #000; opacity: 0;
-      pointer-events: none; z-index: 200; transition: opacity 0.35s ease;
-    }
+    #blackout { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 200; transition: opacity 0.35s ease; }
     #blackout.fade-in  { opacity: 1; pointer-events: all; }
     #blackout.fade-out { opacity: 0; pointer-events: none; }
-
-    /* nav oculto — los botones están en index.html fuera del iframe */
-    nav { display: none !important; }
-
-    /* HOTSPOTS */
-    .pnlm-hotspot-base.hs-nav {
-      width: 36px !important; height: 36px !important;
-      background: none !important; border: none !important;
-      margin: -18px 0 0 -18px !important; overflow: visible !important;
-    }
+    nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: linear-gradient(to top, rgba(0,0,0,0.72), transparent); padding: 18px 20px 14px; display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; }
+    nav button { padding: 5px 13px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); cursor: pointer; font-size: 12px; letter-spacing: 0.02em; transition: all 0.2s; }
+    nav button:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    nav button.active { background: rgba(255,255,255,0.92); color: #111; border-color: transparent; font-weight: 600; }
+    .pnlm-hotspot-base.hs-nav { width: 36px !important; height: 36px !important; background: none !important; border: none !important; margin: -18px 0 0 -18px !important; overflow: visible !important; }
     .pnlm-hotspot-base.hs-nav span.pnlm-sprite { display: none !important; }
-    .pnlm-hotspot-base.hs-nav::before,
-    .pnlm-hotspot-base.hs-nav::after {
-      content: ''; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0.3);
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.85);
-      animation: hs-ping 2s ease-out infinite; pointer-events: none;
-    }
+    .pnlm-hotspot-base.hs-nav::before, .pnlm-hotspot-base.hs-nav::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.3); width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.85); animation: hs-ping 2s ease-out infinite; pointer-events: none; }
     .pnlm-hotspot-base.hs-nav::after { animation-delay: 0.7s; }
-    .pnlm-hotspot-base.hs-nav .hs-dot {
-      position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 10px; height: 10px;
-      background: #D4845A; /* salmón */
-      border-radius: 50%; box-shadow: 0 0 0 2px rgba(0,0,0,0.35);
-      z-index: 2; pointer-events: none;
-    }
-    @keyframes hs-ping {
-      0%   { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
-    }
+    .pnlm-hotspot-base.hs-nav .hs-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #D4845A; border-radius: 50%; box-shadow: 0 0 0 2px rgba(0,0,0,0.35); z-index: 2; pointer-events: none; }
+    @keyframes hs-ping { 0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; } }
     .pnlm-hotspot-base .pnlm-tooltip { top: -38px !important; }
-    .pnlm-hotspot-base .pnlm-tooltip span {
-      background: rgba(10,10,10,0.8) !important; border-radius: 6px !important;
-      font-size: 12px !important; padding: 5px 11px !important;
-      white-space: nowrap !important; color: #fff !important;
-      font-family: 'Segoe UI', sans-serif !important; letter-spacing: 0.03em !important;
-      border: 1px solid rgba(255,255,255,0.12) !important;
-    }
+    .pnlm-hotspot-base .pnlm-tooltip span { background: rgba(10,10,10,0.8) !important; border-radius: 6px !important; font-size: 12px !important; padding: 5px 11px !important; white-space: nowrap !important; color: #fff !important; font-family: 'Segoe UI', sans-serif !important; letter-spacing: 0.03em !important; border: 1px solid rgba(255,255,255,0.12) !important; }
     .pnlm-hotspot-base .pnlm-tooltip:before { display: none !important; }
     .pnlm-controls-container { display: none !important; }
-
-    /* Ocultar hotspots en móvil */
-    @media (max-width: 768px) {
-      .pnlm-hotspot-base.hs-nav { display: none !important; }
-    }
   </style>
 </head>
 <body>
-
 <header>
   <span id="scene-label">Sala central</span>
   <span class="logo-txt">Tour Virtual</span>
 </header>
-
 <div id="viewer"></div>
 <div id="blackout"></div>
-
 <nav>
   <button class="active" onclick="goTo('cam1')">Sala central</button>
   <button onclick="goTo('cam2')">Baño de sala</button>
@@ -98,100 +50,57 @@
   <button onclick="goTo('cam9')">Dormitorio mediano</button>
   <button onclick="goTo('cam10')">Dormitorio pequeño</button>
 </nav>
-
 <script src="https://unpkg.com/pannellum@2.5.6/build/pannellum.js"></script>
 <script>
-
-const esMobil = window.innerWidth <= 768;
-
 const escenas = {
-  cam1:  { label: 'Sala central',         imagen: './renders/Camara1_360.webp',
-    hotSpots: [{ pitch: -31.65, yaw:  54.98, destino: 'cam5', texto: 'Sala - Pasillo' }] },
-  cam2:  { label: 'Baño de sala',         imagen: './renders/Camara2_360.webp',
-    hotSpots: [{ pitch: -31.11, yaw: -91.76, destino: 'cam5', texto: 'Sala - Pasillo' }] },
-  cam3:  { label: 'Cocina',               imagen: './renders/Camara3_360.webp',
-    hotSpots: [{ pitch: -38.89, yaw:  97.96, destino: 'cam5', texto: 'Sala - Pasillo' }] },
-  cam4:  { label: 'Pasillo',              imagen: './renders/Camara4_360.webp',
-    hotSpots: [
-      { pitch: -15.97, yaw:  176.38, destino: 'cam2',  texto: 'Baño de sala'        },
-      { pitch: -11.55, yaw:  181.55, destino: 'cam5',  texto: 'Sala - Pasillo'       },
-      { pitch: -18.54, yaw: -106.53, destino: 'cam10', texto: 'Dormitorio pequeño'   },
-      { pitch: -14.54, yaw:  -91.07, destino: 'cam6',  texto: 'Baño secundario'      },
-      { pitch: -18.54, yaw:  -65.56, destino: 'cam9',  texto: 'Dormitorio mediano'   },
-      { pitch: -30.24, yaw:    3.69, destino: 'cam8',  texto: 'Dormitorio principal' }
-    ]},
-  cam5:  { label: 'Sala - Pasillo',       imagen: './renders/Camara5_360.webp',
-    hotSpots: [
-      { pitch: -31.10, yaw: -113.51, destino: 'cam1', texto: 'Sala central' },
-      { pitch: -24.68, yaw:  -14.18, destino: 'cam3', texto: 'Cocina'       },
-      { pitch: -11.07, yaw:    2.00, destino: 'cam4', texto: 'Pasillo'      },
-      { pitch: -24.38, yaw:    9.13, destino: 'cam2', texto: 'Baño de sala' }
-    ]},
-  cam6:  { label: 'Baño secundario',      imagen: './renders/Camara6_360.webp',
-    hotSpots: [{ pitch: -36.11, yaw: -174.32, destino: 'cam4', texto: 'Pasillo' }] },
-  cam7:  { label: 'Baño principal',       imagen: './renders/Camara7_360.webp',
-    hotSpots: [{ pitch: -30.07, yaw: -178.10, destino: 'cam8', texto: 'Dormitorio principal' }] },
-  cam8:  { label: 'Dormitorio principal', imagen: './renders/Camara8_360.webp',
-    hotSpots: [
-      { pitch: -11.03, yaw: 150.50, destino: 'cam4', texto: 'Pasillo'        },
-      { pitch: -12.45, yaw: 136.46, destino: 'cam7', texto: 'Baño principal' }
-    ]},
-  cam9:  { label: 'Dormitorio mediano',   imagen: './renders/Camara9_360.webp',
-    hotSpots: [{ pitch: -9.52, yaw: -114.01, destino: 'cam4', texto: 'Pasillo' }] },
-  cam10: { label: 'Dormitorio pequeño',   imagen: './renders/Camara10_360.webp',
-    hotSpots: [{ pitch: -16.93, yaw: 173.44, destino: 'cam4', texto: 'Pasillo' }] }
+  cam1:  { label: 'Sala central',         imagen: './renders/Camara1_360.webp', hotSpots: [{ pitch: -31.65, yaw:  54.98, destino: 'cam5', texto: 'Sala - Pasillo' }] },
+  cam2:  { label: 'Baño de sala',         imagen: './renders/Camara2_360.webp', hotSpots: [{ pitch: -31.11, yaw: -91.76, destino: 'cam5', texto: 'Sala - Pasillo' }] },
+  cam3:  { label: 'Cocina',               imagen: './renders/Camara3_360.webp', hotSpots: [{ pitch: -38.89, yaw:  97.96, destino: 'cam5', texto: 'Sala - Pasillo' }] },
+  cam4:  { label: 'Pasillo',              imagen: './renders/Camara4_360.webp', hotSpots: [
+    { pitch: -15.97, yaw:  176.38, destino: 'cam2',  texto: 'Baño de sala'        },
+    { pitch: -11.55, yaw:  181.55, destino: 'cam5',  texto: 'Sala - Pasillo'       },
+    { pitch: -18.54, yaw: -106.53, destino: 'cam10', texto: 'Dormitorio pequeño'   },
+    { pitch: -14.54, yaw:  -91.07, destino: 'cam6',  texto: 'Baño secundario'      },
+    { pitch: -18.54, yaw:  -65.56, destino: 'cam9',  texto: 'Dormitorio mediano'   },
+    { pitch: -30.24, yaw:    3.69, destino: 'cam8',  texto: 'Dormitorio principal' }
+  ]},
+  cam5:  { label: 'Sala - Pasillo',       imagen: './renders/Camara5_360.webp', hotSpots: [
+    { pitch: -31.10, yaw: -113.51, destino: 'cam1', texto: 'Sala central' },
+    { pitch: -24.68, yaw:  -14.18, destino: 'cam3', texto: 'Cocina'       },
+    { pitch: -11.07, yaw:    2.00, destino: 'cam4', texto: 'Pasillo'      },
+    { pitch: -24.38, yaw:    9.13, destino: 'cam2', texto: 'Baño de sala' }
+  ]},
+  cam6:  { label: 'Baño secundario',      imagen: './renders/Camara6_360.webp', hotSpots: [{ pitch: -36.11, yaw: -174.32, destino: 'cam4', texto: 'Pasillo' }] },
+  cam7:  { label: 'Baño principal',       imagen: './renders/Camara7_360.webp', hotSpots: [{ pitch: -30.07, yaw: -178.10, destino: 'cam8', texto: 'Dormitorio principal' }] },
+  cam8:  { label: 'Dormitorio principal', imagen: './renders/Camara8_360.webp', hotSpots: [
+    { pitch: -11.03, yaw: 150.50, destino: 'cam4', texto: 'Pasillo'        },
+    { pitch: -12.45, yaw: 136.46, destino: 'cam7', texto: 'Baño principal' }
+  ]},
+  cam9:  { label: 'Dormitorio mediano',   imagen: './renders/Camara9_360.webp', hotSpots: [{ pitch: -9.52, yaw: -114.01, destino: 'cam4', texto: 'Pasillo' }] },
+  cam10: { label: 'Dormitorio pequeño',   imagen: './renders/Camara10_360.webp', hotSpots: [{ pitch: -16.93, yaw: 173.44, destino: 'cam4', texto: 'Pasillo' }] }
 };
-
 const precargadas = new Set();
 function precargarVecinas(id) {
-  escenas[id].hotSpots.forEach(h => {
-    if (!precargadas.has(h.destino)) {
-      precargadas.add(h.destino);
-      const img = new Image(); img.src = escenas[h.destino].imagen;
-    }
-  });
+  escenas[id].hotSpots.forEach(h => { if (!precargadas.has(h.destino)) { precargadas.add(h.destino); const img = new Image(); img.src = escenas[h.destino].imagen; } });
 }
-
 function buildScenes() {
   const out = {};
   Object.entries(escenas).forEach(([id, s]) => {
-    out[id] = {
-      type: 'equirectangular', panorama: s.imagen,
-      hotSpots: esMobil ? [] : s.hotSpots.map(h => ({
-        pitch: h.pitch, yaw: h.yaw, type: 'info', text: h.texto,
-        cssClass: 'hs-nav', clickHandlerFunc: () => transicion(h.destino)
-      }))
-    };
+    out[id] = { type: 'equirectangular', panorama: s.imagen, hotSpots: s.hotSpots.map(h => ({ pitch: h.pitch, yaw: h.yaw, type: 'info', text: h.texto, cssClass: 'hs-nav', clickHandlerFunc: () => transicion(h.destino) })) };
   });
   return out;
 }
-
 const viewer = pannellum.viewer('viewer', {
-  default: {
-    firstScene: 'cam1', autoLoad: true, showControls: false,
-    sceneFadeDuration: 0, mouseZoom: true, hfov: 100, minHfov: 85, maxHfov: 110
-  },
+  default: { firstScene: 'cam1', autoLoad: true, showControls: false, sceneFadeDuration: 0, mouseZoom: true, hfov: 100, minHfov: 85, maxHfov: 110 },
   scenes: buildScenes()
 });
-
 function inyectarDots() {
-  if (esMobil) return;
-  document.querySelectorAll('.hs-nav').forEach(el => {
-    if (!el.querySelector('.hs-dot')) {
-      const d = document.createElement('div');
-      d.className = 'hs-dot';
-      el.appendChild(d);
-    }
-  });
+  document.querySelectorAll('.hs-nav').forEach(el => { if (!el.querySelector('.hs-dot')) { const d = document.createElement('div'); d.className = 'hs-dot'; el.appendChild(d); } });
 }
-
 function actualizarNav(sceneId) {
   document.getElementById('scene-label').textContent = escenas[sceneId].label;
-  document.querySelectorAll('nav button').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').includes(sceneId));
-  });
+  document.querySelectorAll('nav button').forEach(btn => { btn.classList.toggle('active', btn.getAttribute('onclick').includes(sceneId)); });
 }
-
 let transitioning = false;
 function transicion(sceneId) {
   if (transitioning) return;
@@ -199,34 +108,23 @@ function transicion(sceneId) {
   const overlay = document.getElementById('blackout');
   overlay.classList.add('fade-in');
   setTimeout(() => {
-    actualizarNav(sceneId);
-    viewer.loadScene(sceneId);
+    actualizarNav(sceneId); viewer.loadScene(sceneId);
     let t = 0;
     const tick = setInterval(() => {
       t += 100;
       const spinner = document.querySelector('.pnlm-load-box');
       const ok = !spinner || spinner.style.display === 'none' || getComputedStyle(spinner).display === 'none';
       if (ok || t >= 8000) {
-        clearInterval(tick);
-        inyectarDots();
-        precargarVecinas(sceneId);
-        overlay.classList.remove('fade-in');
-        overlay.classList.add('fade-out');
+        clearInterval(tick); inyectarDots(); precargarVecinas(sceneId);
+        overlay.classList.remove('fade-in'); overlay.classList.add('fade-out');
         setTimeout(() => { overlay.classList.remove('fade-out'); transitioning = false; }, 400);
       }
     }, 100);
   }, 350);
 }
-
 function goTo(sceneId) { if (!transitioning) transicion(sceneId); }
 viewer.on('scenechange', id => { if (escenas[id]) actualizarNav(id); });
 viewer.on('load', () => { setTimeout(inyectarDots, 300); precargarVecinas('cam1'); });
-
-// Recibir comandos desde index.html via postMessage
-window.addEventListener('message', e => {
-  if (e.data && e.data.action === 'goTo') goTo(e.data.scene);
-});
-
 </script>
 </body>
 </html>

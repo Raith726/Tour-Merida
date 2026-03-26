@@ -6,6 +6,7 @@
   <title>Mérida Surco 224 — Terrasol Inmobiliaria</title>
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;900&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet"/>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/pannellum@2.5.6/build/pannellum.css"/>
   <style>
     :root {
       --azul:      #1B2A4A;
@@ -21,21 +22,21 @@
     body { font-family: 'Nunito', sans-serif; color: var(--texto); background: var(--blanco); overflow-x: hidden; max-width: 100vw; }
 
     /* NAVBAR */
-    nav {
+    nav.top-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: var(--azul);
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 24px; height: 64px;
     }
-    nav img.logo { height: 54px; }
-    nav ul { list-style: none; display: flex; gap: 24px; }
-    nav ul li a {
+    nav.top-nav img.logo { height: 54px; }
+    nav.top-nav ul { list-style: none; display: flex; gap: 24px; }
+    nav.top-nav ul li a {
       color: rgba(255,255,255,0.75); text-decoration: none;
       font-family: 'Raleway', sans-serif; font-size: 12px; font-weight: 600;
       letter-spacing: 0.08em; text-transform: uppercase;
       transition: color 0.2s; white-space: nowrap;
     }
-    nav ul li a:hover { color: var(--salmon); }
+    nav.top-nav ul li a:hover { color: var(--salmon); }
 
     /* HERO */
     .hero {
@@ -87,22 +88,33 @@
     .precio-cta { background: var(--salmon); color: #fff; border: none; border-radius: 30px; padding: 12px 28px; font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.03em; transition: background 0.2s; white-space: nowrap; }
     .precio-cta:hover { background: var(--salmon-lt); }
 
-    /* TOUR 360 via iframe */
+    /* TOUR 360 embebido */
     .seccion-tour { background: var(--azul); padding-bottom: 0; }
-    .tour-iframe-wrap { width: 100%; height: 65vw; min-height: 340px; max-height: 640px; }
-    .tour-iframe-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
-    .tour-nav {
-      background: rgba(0,0,0,0.6); padding: 10px 16px 14px;
-      display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
-    }
-    .tour-nav button {
-      padding: 5px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px;
-      background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.75);
-      cursor: pointer; font-size: 11px; font-family: 'Nunito', sans-serif;
-      transition: all 0.2s; white-space: nowrap;
-    }
+    #viewer-360-wrap { width: 100%; height: 60vw; min-height: 320px; max-height: 620px; }
+    #viewer-360 { width: 100%; height: 100%; }
+    .tour-label-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px 0; flex-wrap: wrap; gap: 6px; }
+    #tour-scene-label { font-family: 'Raleway', sans-serif; font-size: 14px; font-weight: 600; color: #fff; letter-spacing: 0.04em; }
+    .tour-hint { font-size: 11px; color: rgba(255,255,255,0.4); }
+    .tour-nav { background: rgba(0,0,0,0.5); padding: 10px 16px 14px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+    .tour-nav button { padding: 5px 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.75); cursor: pointer; font-size: 11px; font-family: 'Nunito', sans-serif; transition: all 0.2s; white-space: nowrap; }
     .tour-nav button:hover { background: rgba(255,255,255,0.18); color: #fff; }
     .tour-nav button.active { background: var(--salmon); color: #fff; border-color: transparent; font-weight: 700; }
+
+    #blackout { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 500; transition: opacity 0.35s ease; }
+    #blackout.fade-in  { opacity: 1; pointer-events: all; }
+    #blackout.fade-out { opacity: 0; pointer-events: none; }
+
+    /* HOTSPOTS */
+    .pnlm-hotspot-base.hs-nav { width: 36px !important; height: 36px !important; background: none !important; border: none !important; margin: -18px 0 0 -18px !important; overflow: visible !important; }
+    .pnlm-hotspot-base.hs-nav span.pnlm-sprite { display: none !important; }
+    .pnlm-hotspot-base.hs-nav::before, .pnlm-hotspot-base.hs-nav::after { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.3); width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.85); animation: hs-ping 2s ease-out infinite; pointer-events: none; }
+    .pnlm-hotspot-base.hs-nav::after { animation-delay: 0.7s; }
+    .pnlm-hotspot-base.hs-nav .hs-dot { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: #D4845A; border-radius: 50%; box-shadow: 0 0 0 2px rgba(0,0,0,0.35); z-index: 2; pointer-events: none; }
+    @keyframes hs-ping { 0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; } }
+    .pnlm-hotspot-base .pnlm-tooltip { top: -38px !important; }
+    .pnlm-hotspot-base .pnlm-tooltip span { background: rgba(27,42,74,0.9) !important; border-radius: 6px !important; font-size: 12px !important; padding: 5px 11px !important; white-space: nowrap !important; color: #fff !important; font-family: 'Nunito', sans-serif !important; border: 1px solid rgba(212,132,90,0.3) !important; }
+    .pnlm-hotspot-base .pnlm-tooltip:before { display: none !important; }
+    .pnlm-controls-container { display: none !important; }
 
     /* COTIZACIÓN */
     .seccion-cotiza { background: var(--gris); padding: 48px 24px; }
@@ -127,19 +139,14 @@
     .reveal.visible { opacity: 1; transform: none; }
 
     /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .carac-grid { grid-template-columns: repeat(2, 1fr); }
-      nav ul { gap: 16px; }
-      nav ul li a { font-size: 11px; }
-    }
+    @media (max-width: 900px) { .carac-grid { grid-template-columns: repeat(2, 1fr); } nav.top-nav ul { gap: 16px; } nav.top-nav ul li a { font-size: 11px; } }
     @media (max-width: 640px) {
-      nav { padding: 0 16px; height: 56px; }
-      nav img.logo { height: 38px; }
-      nav ul { gap: 12px; }
-      nav ul li a { font-size: 10px; letter-spacing: 0.03em; }
+      nav.top-nav { padding: 0 16px; height: 56px; }
+      nav.top-nav img.logo { height: 38px; }
+      nav.top-nav ul { gap: 12px; }
+      nav.top-nav ul li a { font-size: 10px; letter-spacing: 0.03em; }
       .hero { margin-top: 56px; padding: 24px 16px 20px; }
       .hero h1 { font-size: 32px; }
-      .hero-sub { font-size: 11px; }
       .seccion-titulo { padding: 24px 16px 0; }
       .hint-texto { display: none; }
       model-viewer { height: 360px; }
@@ -153,18 +160,15 @@
       .precio-cta { width: 100%; text-align: center; }
       .seccion-cotiza { padding: 36px 16px; }
       footer { padding: 20px 16px; flex-direction: column; align-items: flex-start; }
-      .tour-iframe-wrap { height: 80vw; min-height: 280px; }
+      #viewer-360-wrap { height: 72vw; min-height: 280px; }
+      .tour-nav button { font-size: 10px; padding: 4px 10px; }
     }
-    @media (max-width: 420px) {
-      nav ul { overflow-x: auto; gap: 10px; }
-      nav ul li a { font-size: 9.5px; }
-      .hero h1 { font-size: 28px; }
-    }
+    @media (max-width: 420px) { nav.top-nav ul { overflow-x: auto; gap: 10px; } nav.top-nav ul li a { font-size: 9.5px; } .hero h1 { font-size: 28px; } }
   </style>
 </head>
 <body>
 
-<nav>
+<nav class="top-nav">
   <img src="./terrasol_blanco.png" alt="Terrasol Inmobiliaria" class="logo"/>
   <ul>
     <li><a href="#modelo">Modelo 3D</a></li>
@@ -182,7 +186,6 @@
   </div>
 </section>
 
-<!-- MODELO 3D -->
 <section class="seccion-modelo" id="modelo">
   <div class="seccion-titulo reveal">
     <h2>Modelo <span>3D</span></h2>
@@ -191,30 +194,16 @@
   </div>
   <div class="modelo-wrap">
     <div id="progress-bar"></div>
-    <model-viewer
-      src="./modelo1.glb"
-      alt="Departamento Mérida Surco 224"
-      ar
-      ar-modes="webxr scene-viewer quick-look"
-      camera-controls
-      auto-rotate
-      shadow-intensity="0.8"
-      environment-image="neutral"
-      exposure="1.1"
-      ar-placement="floor">
-    </model-viewer>
+    <model-viewer src="./modelo1.glb" alt="Departamento Mérida Surco 224" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate shadow-intensity="0.8" environment-image="neutral" exposure="1.1" ar-placement="floor"></model-viewer>
     <img src="./terrasol_blanco.png" alt="Terrasol" class="logo-watermark"/>
   </div>
 </section>
 
-<!-- CARACTERÍSTICAS -->
 <section class="seccion-carac" id="caracteristicas">
   <div class="reveal">
     <span class="badge-estado">En construcción</span>
     <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">
-      <h2 style="font-family:'Raleway',sans-serif;font-size:26px;font-weight:900;color:var(--azul);">
-        Departamento <span style="color:var(--salmon);">Flat</span>
-      </h2>
+      <h2 style="font-family:'Raleway',sans-serif;font-size:26px;font-weight:900;color:var(--azul);">Departamento <span style="color:var(--salmon);">Flat</span></h2>
       <span style="font-size:13px;color:#888;">Mérida Surco 224</span>
     </div>
   </div>
@@ -233,70 +222,49 @@
       <div class="desde">Precio desde</div>
       <div class="precio"><span>$</span>205,000</div>
     </div>
-    <button class="precio-cta" onclick="document.getElementById('cotiza').scrollIntoView({behavior:'smooth'})">
-      Cotizar ahora →
-    </button>
+    <button class="precio-cta" onclick="document.getElementById('cotiza').scrollIntoView({behavior:'smooth'})">Cotizar ahora →</button>
   </div>
 </section>
 
-<!-- TOUR 360 — tour360.html corre dentro del iframe -->
 <section class="seccion-tour" id="tour">
   <div class="seccion-titulo reveal" style="padding-bottom:12px;">
     <h2>Tour <span>360°</span></h2>
     <div class="linea"></div>
-    <span class="hint-texto">Arrastra para explorar · Toca los puntos para navegar</span>
+    <span class="hint-texto">Arrastra · Toca los puntos para navegar</span>
   </div>
-  <div class="tour-iframe-wrap">
-    <iframe src="./tour360.html" allowfullscreen></iframe>
+  <div class="tour-label-bar">
+    <span id="tour-scene-label">Sala central</span>
+    <span class="tour-hint">Toca los puntos para navegar</span>
+  </div>
+  <div id="viewer-360-wrap">
+    <div id="viewer-360"></div>
   </div>
   <div class="tour-nav">
-    <button class="active" onclick="tourGoTo('cam1')">Sala central</button>
-    <button onclick="tourGoTo('cam2')">Baño de sala</button>
-    <button onclick="tourGoTo('cam3')">Cocina</button>
-    <button onclick="tourGoTo('cam4')">Pasillo</button>
-    <button onclick="tourGoTo('cam5')">Sala - Pasillo</button>
-    <button onclick="tourGoTo('cam6')">Baño secundario</button>
-    <button onclick="tourGoTo('cam7')">Baño principal</button>
-    <button onclick="tourGoTo('cam8')">Dormitorio principal</button>
-    <button onclick="tourGoTo('cam9')">Dormitorio mediano</button>
-    <button onclick="tourGoTo('cam10')">Dormitorio pequeño</button>
+    <button class="active" onclick="goTo('cam1')">Sala central</button>
+    <button onclick="goTo('cam2')">Baño de sala</button>
+    <button onclick="goTo('cam3')">Cocina</button>
+    <button onclick="goTo('cam4')">Pasillo</button>
+    <button onclick="goTo('cam5')">Sala - Pasillo</button>
+    <button onclick="goTo('cam6')">Baño secundario</button>
+    <button onclick="goTo('cam7')">Baño principal</button>
+    <button onclick="goTo('cam8')">Dormitorio principal</button>
+    <button onclick="goTo('cam9')">Dormitorio mediano</button>
+    <button onclick="goTo('cam10')">Dormitorio pequeño</button>
   </div>
 </section>
 
-<!-- COTIZACIÓN -->
 <section class="seccion-cotiza" id="cotiza">
   <div class="cotiza-wrap">
     <div class="reveal">
-      <h2 style="font-family:'Raleway',sans-serif;font-size:26px;font-weight:900;color:var(--azul);">
-        Cotiza tu <span style="color:var(--salmon);">nuevo depa</span>
-      </h2>
+      <h2 style="font-family:'Raleway',sans-serif;font-size:26px;font-weight:900;color:var(--azul);">Cotiza tu <span style="color:var(--salmon);">nuevo depa</span></h2>
       <p style="font-size:14px;color:#666;margin-top:6px;">Un asesor se pondrá en contacto contigo a la brevedad.</p>
     </div>
     <div class="form-grid reveal">
-      <div class="form-field">
-        <label>Departamento</label>
-        <select>
-          <option>FL. 101 — 128.58 m²</option>
-          <option>FL. 201 — 128.58 m²</option>
-          <option>FL. 301 — 128.58 m²</option>
-        </select>
-      </div>
-      <div class="form-field">
-        <label>Nombre completo</label>
-        <input type="text" placeholder="Tu nombre"/>
-      </div>
-      <div class="form-field">
-        <label>Celular</label>
-        <input type="tel" placeholder="+51 999 999 999"/>
-      </div>
-      <div class="form-field">
-        <label>Email</label>
-        <input type="email" placeholder="correo@ejemplo.com"/>
-      </div>
-      <label class="form-check">
-        <input type="checkbox"/>
-        Acepto las <a href="#">Políticas de Privacidad</a>
-      </label>
+      <div class="form-field"><label>Departamento</label><select><option>FL. 101 — 128.58 m²</option><option>FL. 201 — 128.58 m²</option><option>FL. 301 — 128.58 m²</option></select></div>
+      <div class="form-field"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"/></div>
+      <div class="form-field"><label>Celular</label><input type="tel" placeholder="+51 999 999 999"/></div>
+      <div class="form-field"><label>Email</label><input type="email" placeholder="correo@ejemplo.com"/></div>
+      <label class="form-check"><input type="checkbox"/> Acepto las <a href="#">Políticas de Privacidad</a></label>
       <button class="btn-cotiza">Cotizar Ahora →</button>
     </div>
   </div>
@@ -307,6 +275,9 @@
   <p>© 2025 Terrasol Inmobiliaria · Todos los derechos reservados</p>
 </footer>
 
+<div id="blackout"></div>
+
+<script src="https://unpkg.com/pannellum@2.5.6/build/pannellum.js"></script>
 <script>
 const progressBar = document.querySelector('#progress-bar');
 document.querySelector('model-viewer').addEventListener('progress', e => {
@@ -315,14 +286,93 @@ document.querySelector('model-viewer').addEventListener('progress', e => {
   if (p === 100) progressBar.classList.add('hide');
 });
 
-// Controlar el tour dentro del iframe via postMessage
-function tourGoTo(sceneId) {
-  const iframe = document.querySelector('.tour-iframe-wrap iframe');
-  if (iframe) iframe.contentWindow.postMessage({ action: 'goTo', scene: sceneId }, '*');
-  document.querySelectorAll('.tour-nav button').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick').includes(sceneId));
+const escenas = {
+  cam1:  { label: 'Sala central',         imagen: './renders/Camara1_360.webp', hotSpots: [{ pitch: -31.65, yaw:  54.98, destino: 'cam5', texto: 'Sala - Pasillo' }] },
+  cam2:  { label: 'Baño de sala',         imagen: './renders/Camara2_360.webp', hotSpots: [{ pitch: -31.11, yaw: -91.76, destino: 'cam5', texto: 'Sala - Pasillo' }] },
+  cam3:  { label: 'Cocina',               imagen: './renders/Camara3_360.webp', hotSpots: [{ pitch: -38.89, yaw:  97.96, destino: 'cam5', texto: 'Sala - Pasillo' }] },
+  cam4:  { label: 'Pasillo',              imagen: './renders/Camara4_360.webp', hotSpots: [
+    { pitch: -15.97, yaw:  176.38, destino: 'cam2',  texto: 'Baño de sala'        },
+    { pitch: -11.55, yaw:  181.55, destino: 'cam5',  texto: 'Sala - Pasillo'       },
+    { pitch: -18.54, yaw: -106.53, destino: 'cam10', texto: 'Dormitorio pequeño'   },
+    { pitch: -14.54, yaw:  -91.07, destino: 'cam6',  texto: 'Baño secundario'      },
+    { pitch: -18.54, yaw:  -65.56, destino: 'cam9',  texto: 'Dormitorio mediano'   },
+    { pitch: -30.24, yaw:    3.69, destino: 'cam8',  texto: 'Dormitorio principal' }
+  ]},
+  cam5:  { label: 'Sala - Pasillo',       imagen: './renders/Camara5_360.webp', hotSpots: [
+    { pitch: -31.10, yaw: -113.51, destino: 'cam1', texto: 'Sala central' },
+    { pitch: -24.68, yaw:  -14.18, destino: 'cam3', texto: 'Cocina'       },
+    { pitch: -11.07, yaw:    2.00, destino: 'cam4', texto: 'Pasillo'      },
+    { pitch: -24.38, yaw:    9.13, destino: 'cam2', texto: 'Baño de sala' }
+  ]},
+  cam6:  { label: 'Baño secundario',      imagen: './renders/Camara6_360.webp', hotSpots: [{ pitch: -36.11, yaw: -174.32, destino: 'cam4', texto: 'Pasillo' }] },
+  cam7:  { label: 'Baño principal',       imagen: './renders/Camara7_360.webp', hotSpots: [{ pitch: -30.07, yaw: -178.10, destino: 'cam8', texto: 'Dormitorio principal' }] },
+  cam8:  { label: 'Dormitorio principal', imagen: './renders/Camara8_360.webp', hotSpots: [
+    { pitch: -11.03, yaw: 150.50, destino: 'cam4', texto: 'Pasillo'        },
+    { pitch: -12.45, yaw: 136.46, destino: 'cam7', texto: 'Baño principal' }
+  ]},
+  cam9:  { label: 'Dormitorio mediano',   imagen: './renders/Camara9_360.webp', hotSpots: [{ pitch: -9.52, yaw: -114.01, destino: 'cam4', texto: 'Pasillo' }] },
+  cam10: { label: 'Dormitorio pequeño',   imagen: './renders/Camara10_360.webp', hotSpots: [{ pitch: -16.93, yaw: 173.44, destino: 'cam4', texto: 'Pasillo' }] }
+};
+
+const precargadas = new Set();
+function precargarVecinas(id) {
+  escenas[id].hotSpots.forEach(h => {
+    if (!precargadas.has(h.destino)) { precargadas.add(h.destino); const img = new Image(); img.src = escenas[h.destino].imagen; }
   });
 }
+
+function buildScenes() {
+  const out = {};
+  Object.entries(escenas).forEach(([id, s]) => {
+    out[id] = { type: 'equirectangular', panorama: s.imagen,
+      hotSpots: s.hotSpots.map(h => ({ pitch: h.pitch, yaw: h.yaw, type: 'info', text: h.texto, cssClass: 'hs-nav', clickHandlerFunc: () => transicion(h.destino) }))
+    };
+  });
+  return out;
+}
+
+const viewer = pannellum.viewer('viewer-360', {
+  default: { firstScene: 'cam1', autoLoad: true, showControls: false, sceneFadeDuration: 0, mouseZoom: true, hfov: 100, minHfov: 85, maxHfov: 110 },
+  scenes: buildScenes()
+});
+
+function inyectarDots() {
+  document.querySelectorAll('.hs-nav').forEach(el => {
+    if (!el.querySelector('.hs-dot')) { const d = document.createElement('div'); d.className = 'hs-dot'; el.appendChild(d); }
+  });
+}
+
+function actualizarNav(id) {
+  document.getElementById('tour-scene-label').textContent = escenas[id].label;
+  document.querySelectorAll('.tour-nav button').forEach(btn => { btn.classList.toggle('active', btn.getAttribute('onclick').includes(id)); });
+}
+
+let transitioning = false;
+function transicion(sceneId) {
+  if (transitioning) return;
+  transitioning = true;
+  const overlay = document.getElementById('blackout');
+  overlay.classList.add('fade-in');
+  setTimeout(() => {
+    actualizarNav(sceneId);
+    viewer.loadScene(sceneId);
+    let t = 0;
+    const tick = setInterval(() => {
+      t += 100;
+      const spinner = document.querySelector('.pnlm-load-box');
+      const ok = !spinner || spinner.style.display === 'none' || getComputedStyle(spinner).display === 'none';
+      if (ok || t >= 8000) {
+        clearInterval(tick); inyectarDots(); precargarVecinas(sceneId);
+        overlay.classList.remove('fade-in'); overlay.classList.add('fade-out');
+        setTimeout(() => { overlay.classList.remove('fade-out'); transitioning = false; }, 400);
+      }
+    }, 100);
+  }, 350);
+}
+
+function goTo(id) { if (!transitioning) transicion(id); }
+viewer.on('scenechange', id => { if (escenas[id]) actualizarNav(id); });
+viewer.on('load', () => { setTimeout(inyectarDots, 300); precargarVecinas('cam1'); });
 
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
