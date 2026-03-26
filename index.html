@@ -536,20 +536,11 @@ const viewer = pannellum.viewer('viewer-360', {
   scenes: buildScenes()
 });
 
-// Centrado de hotspots via JS — funciona en desktop y móvil
+
 function inyectarDots() {
-  const contenedor = document.getElementById('viewer-360');
-  const rect = contenedor.getBoundingClientRect();
-  
-  // Pannellum renderiza internamente en un canvas de tamaño fijo
-  // y luego escala el contenedor. Calculamos ese factor.
-  const pnlmRender = contenedor.querySelector('.pnlm-render-container');
-  const scaleX = pnlmRender ? rect.width / pnlmRender.offsetWidth : 1;
-  const scaleY = pnlmRender ? rect.height / pnlmRender.offsetHeight : 1;
-  
-  // El offset correcto es -18px * scale para que el centro caiga exacto
-  const offsetX = Math.round(-18 * (1 / scaleX));
-  const offsetY = Math.round(-18 * (1 / scaleY));
+  const esMobil = window.innerWidth <= 640;
+  const offsetX = esMobil ? -10 : -18;
+  const offsetY = esMobil ? -10 : -18;
 
   document.querySelectorAll('.hs-nav').forEach(el => {
     el.style.marginTop  = `${offsetY}px`;
