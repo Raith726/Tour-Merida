@@ -538,10 +538,22 @@ const viewer = pannellum.viewer('viewer-360', {
 
 // Centrado de hotspots via JS — funciona en desktop y móvil
 function inyectarDots() {
+  const contenedor = document.getElementById('viewer-360');
+  const rect = contenedor.getBoundingClientRect();
+  
+  // Pannellum renderiza internamente en un canvas de tamaño fijo
+  // y luego escala el contenedor. Calculamos ese factor.
+  const pnlmRender = contenedor.querySelector('.pnlm-render-container');
+  const scaleX = pnlmRender ? rect.width / pnlmRender.offsetWidth : 1;
+  const scaleY = pnlmRender ? rect.height / pnlmRender.offsetHeight : 1;
+  
+  // El offset correcto es -18px * scale para que el centro caiga exacto
+  const offsetX = Math.round(-18 * (1 / scaleX));
+  const offsetY = Math.round(-18 * (1 / scaleY));
+
   document.querySelectorAll('.hs-nav').forEach(el => {
-    // Forzar centrado correcto independiente del dispositivo
-    el.style.marginTop  = '-18px';
-    el.style.marginLeft = '-18px';
+    el.style.marginTop  = `${offsetY}px`;
+    el.style.marginLeft = `${offsetX}px`;
     if (!el.querySelector('.hs-dot')) {
       const d = document.createElement('div');
       d.className = 'hs-dot';
@@ -593,6 +605,9 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+window.addEventListener('resize', () => {
+  setTimeout(inyectarDots, 100);
+});
 </script>
 </body>
 </html>
