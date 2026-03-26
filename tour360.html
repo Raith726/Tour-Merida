@@ -43,7 +43,7 @@
     nav button:hover { background: rgba(255,255,255,0.18); color: #fff; }
     nav button.active { background: rgba(255,255,255,0.92); color: #111; border-color: transparent; font-weight: 600; }
 
-    /* HOTSPOTS — solo visibles en desktop */
+    /* HOTSPOTS */
     .pnlm-hotspot-base.hs-nav {
       width: 36px !important; height: 36px !important;
       background: none !important; border: none !important;
@@ -62,7 +62,8 @@
     .pnlm-hotspot-base.hs-nav .hs-dot {
       position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 10px; height: 10px; background: #fff;
+      width: 10px; height: 10px;
+      background: #D4845A; /* salmón */
       border-radius: 50%; box-shadow: 0 0 0 2px rgba(0,0,0,0.35);
       z-index: 2; pointer-events: none;
     }
@@ -81,7 +82,7 @@
     .pnlm-hotspot-base .pnlm-tooltip:before { display: none !important; }
     .pnlm-controls-container { display: none !important; }
 
-    /* En móvil ocultar hotspots completamente */
+    /* Ocultar hotspots en móvil */
     @media (max-width: 768px) {
       .pnlm-hotspot-base.hs-nav { display: none !important; }
     }
@@ -168,7 +169,6 @@ function buildScenes() {
   Object.entries(escenas).forEach(([id, s]) => {
     out[id] = {
       type: 'equirectangular', panorama: s.imagen,
-      // En móvil no incluir hotspots en absoluto
       hotSpots: esMobil ? [] : s.hotSpots.map(h => ({
         pitch: h.pitch, yaw: h.yaw, type: 'info', text: h.texto,
         cssClass: 'hs-nav', clickHandlerFunc: () => transicion(h.destino)
@@ -187,7 +187,7 @@ const viewer = pannellum.viewer('viewer', {
 });
 
 function inyectarDots() {
-  if (esMobil) return; // no inyectar en móvil
+  if (esMobil) return;
   document.querySelectorAll('.hs-nav').forEach(el => {
     if (!el.querySelector('.hs-dot')) {
       const d = document.createElement('div');
