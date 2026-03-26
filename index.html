@@ -413,9 +413,16 @@ setTimeout(() => {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
 }, 2000);
 
-// Fullscreen del visor
+// Fullscreen — en iOS abre tour360.html en nueva pestaña, en otros usa API nativa
 function toggleFullscreen() {
   const wrap = document.getElementById('viewer-360-wrap');
+  const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+  if (esIOS) {
+    window.open('./tour360.html', '_blank');
+    return;
+  }
+
   if (!document.fullscreenElement && !document.webkitFullscreenElement) {
     (wrap.requestFullscreen || wrap.webkitRequestFullscreen).call(wrap);
   } else {
